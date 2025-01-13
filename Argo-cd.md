@@ -305,4 +305,4 @@ By following these steps, you’ll be able to manage your Kubernetes application
 ### **Next Steps**
 1. Explore more about Argo CD’s integration with **Helm** and **Kustomize** for managing complex applications.
 2. Dive deeper into Argo CD's security features, including role-based access control (RBAC) and how to manage multi-cluster environments.
-
+https://github.com/aadarsh-nagrath/DevOps/blob/7670958d598c5ef2f0bc78f5c48a0e5a17197700/argo-cd-integration-helm/next-steps.md
