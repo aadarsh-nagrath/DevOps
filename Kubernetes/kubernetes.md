@@ -1,0 +1,1 @@
+Deployments are abstraction on pods and pods are abstraction on containers.
