@@ -218,3 +218,159 @@ The following is an example of a `.tfstate` file for a terraform config managing
 - Terraform Cloud (managed offering)
 - Self-managed remote backends (e.g., Amazon S3, Google Cloud Storage)
 ```
+```md
+# Terraform Commands and Remote Backends
+
+## Terraform Commands
+
+### 1. Terraform Plan Command
+- **Purpose**: Compares the desired state (from the Terraform configuration) with the actual state (from the Terraform state file).
+- **Action**: Identifies any discrepancies between the two states and outputs the differences and the actions needed to reconcile the states.
+  
+#### Example:
+```bash
+terraform plan
+```
+
+### 2. Terraform Apply Command
+- **Purpose**: Executes the actions identified in the Terraform Plan command.
+- **Action**: Creates, modifies, or deletes resources as needed to match the desired state and updates the Terraform state file accordingly.
+  
+#### Example:
+```bash
+terraform apply
+```
+
+### 3. Terraform Destroy Command
+- **Purpose**: Removes all resources associated with the Terraform configuration.
+- **Caution**: This command **permanently deletes** resources. It's typically used for cleaning up resources at the end of a project or example.
+  
+#### Example:
+```bash
+terraform destroy
+```
+
+---
+
+## Remote Backends for Terraform
+
+### 1. Terraform Cloud
+- **Type**: Managed offering from HashiCorp.
+- **Configuration**: Specify a backend type of `"remote"` with organization and workspace names.
+- **Features**: Allows interaction via a web UI to manage your account, organization, and workspaces.
+- **Cost**: Free up to five users within an organization, but costs **$20 per user per month** for more than five users.
+
+#### Example Configuration for Terraform Cloud:
+```hcl
+terraform {
+  backend "remote" {
+    organization = "example-org"
+    workspaces {
+      name = "example-workspace"
+    }
+  }
+}
+```
+
+### 2. Self-managed Backend (AWS S3)
+- **Configuration**: Uses an S3 bucket to store the state file and a DynamoDB table to prevent multiple concurrent `apply` commands.
+- **Bootstrapping Process**: Required to provision the S3 bucket and DynamoDB table.
+  
+#### Example Configuration for AWS S3 Backend:
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state"
+    key            = "path/to/my/key"
+    region         = "us-west-2"
+    dynamodb_table = "my-lock-table"
+    encrypt        = true
+  }
+}
+```
+---
+
+## Types of Variables
+
+### 1. Input Variables
+- **Purpose**: Input parameters or arguments for a function.
+- **Syntax**:
+```hcl
+variable "instance_type" {
+  type    = string
+  default = "t2.micro"
+}
+```
+
+### 2. Local Variables
+- **Purpose**: Temporary variables within the scope of a function.
+- **Syntax**:
+```hcl
+locals {
+  service_name = "example-service"
+  owner        = "your_name"
+}
+```
+
+### 3. Output Variables
+- **Purpose**: Return values of a function that allow bundling multiple Terraform configurations.
+- **Syntax**:
+```hcl
+output "instance_ip" {
+  value = aws_instance.example.public_ip
+}
+```
+
+---
+
+## Setting Input Variables
+
+### Ways to Set Input Variables (Ranked by Precedence):
+1. **Terraform CLI prompts**: If no value is specified and there’s no default, Terraform prompts for the value.
+2. **Default value in the block**: Defined in the variable declaration.
+3. **Environment variables**: Set with the `TF_VAR_` prefix.
+4. **Terraform .tfvars files**: Store values in `.tfvars` files.
+5. **Auto-applied .auto.tfvars files**: Applied over `.tfvars` files automatically.
+6. **-var or -var-file options**: Pass values when running the `terraform plan` or `terraform apply` commands.
+
+#### Example of Passing Input Variable:
+```bash
+terraform apply -var "instance_type=t2.medium"
+```
+
+---
+
+## Variable Value Types
+- **Primitive Types**: string, number, boolean.
+- **Complex Types**: lists, sets, maps, etc.
+- **Type Checking**: Automatically performed by Terraform. Custom validation rules can also be defined.
+
+---
+
+## Handling Sensitive Data
+
+To handle sensitive data such as passwords securely:
+- **Mark Sensitive Variables**: Add the `sensitive = true` attribute when defining the variable. This will mask sensitive data in Terraform plan output.
+
+#### Example:
+```hcl
+variable "db_password" {
+  type      = string
+  sensitive = true
+}
+```
+
+- **Avoid Storing Sensitive Data in Files**: Instead, use secure methods for passing in sensitive data:
+  - **Environment Variables**.
+  - **-var command**.
+  - **External Secret Stores** like AWS Secrets Manager or HashiCorp Vault.
+
+---
+
+## Summary
+
+- **Terraform Commands**: `plan` to compare states, `apply` to execute changes, and `destroy` to remove resources.
+- **Remote Backends**: Terraform Cloud and self-managed AWS S3 backends offer different methods for managing Terraform state.
+- **Variables**: Input, local, and output variables allow for dynamic and flexible Terraform configurations.
+- **Sensitive Data**: Terraform provides mechanisms to securely handle sensitive information.
+```
