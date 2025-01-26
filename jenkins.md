@@ -263,3 +263,54 @@ An automotive company (e.g., Tesla or General Motors) can use Jenkins to manage 
 ### Conclusion
 
 Jenkins is an extremely powerful tool for automating the software development lifecycle, enabling Continuous Integration and Continuous Deployment. Its flexibility, wide range of plugins, and ability to scale make it suitable for projects of all sizes. By incorporating Jenkins into your development process, you can improve productivity, code quality, and delivery speed.
+
+
+In Jenkins, a **master-slave architecture** (now more commonly referred to as **controller-agent architecture**) is a setup where one Jenkins instance (the **master** or **controller**) manages multiple other Jenkins instances (the **slaves** or **agents**). This setup is beneficial for distributing workloads and improving scalability, allowing Jenkins to handle more builds simultaneously by leveraging additional machines.
+
+Here’s how the **master-slave** architecture works:
+
+### 1. **Master (Controller):**
+   - The **master** is the central Jenkins instance that handles the scheduling of jobs, user interface interactions, and job management.
+   - It controls the creation of builds, assigns them to agents, and provides the web interface for users to configure, trigger, and monitor builds.
+   - The master doesn't execute the build itself; instead, it delegates the build execution to connected agents.
+
+### 2. **Slave (Agent):**
+   - **Slaves** are separate machines or nodes that Jenkins uses to run jobs.
+   - They can be configured with different environments, operating systems, or tools, enabling you to distribute your builds and test across different platforms.
+   - Each agent is connected to the Jenkins master and can execute jobs that are assigned to it.
+   - The agent runs a small Jenkins agent service that listens for commands from the master.
+
+### **Advantages:**
+- **Scalability:** Distribute the workload across multiple machines to improve performance.
+- **Resource Utilization:** Use specialized agents with specific tools (e.g., Linux for specific builds, Windows for others).
+- **Parallel Execution:** Run multiple builds simultaneously without overloading the master machine.
+
+### **Setting Up Master-Slave Architecture in Jenkins:**
+
+1. **Install Jenkins on Master Node:**
+   - Install Jenkins on your central machine (master), which will be responsible for managing jobs.
+   - Configure it via the Jenkins web interface.
+
+2. **Configure Slave Nodes:**
+   - On each agent machine, install the Jenkins agent software (can be done manually or via the UI).
+   - The slave connects to the master via SSH or Java Web Start (JWS) and waits for jobs.
+
+3. **Add Agent in Jenkins Master:**
+   - Go to the **Manage Jenkins** section on the master instance.
+   - Select **Manage Nodes and Clouds** and then click **New Node**.
+   - Choose the type of agent (Permanent Agent, Temporary Agent, etc.).
+   - Set the agent’s details (name, remote root directory, labels, etc.).
+   - Provide connection details (e.g., SSH or JNLP configuration).
+
+4. **Execute Jobs on the Agent:**
+   - Assign builds to run on specific agents using labels in your Jenkins pipeline or freestyle jobs.
+
+### **Example of a Simple Setup:**
+
+1. **On the master:**
+   - Install Jenkins and configure it.
+   - Add agent nodes via **Manage Jenkins** > **Manage Nodes**.
+
+2. **On the agent:**
+   - Install the Jenkins agent (Java Web Start or SSH).
+   - The agent should automatically connect to the master when the agent configuration is correct.
