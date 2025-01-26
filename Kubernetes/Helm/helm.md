@@ -6,6 +6,7 @@ https://www.youtube.com/watch?v=w51lDVuRWuk
 
 ## **What is Helm?**
 Helm is a **package manager for Kubernetes**, simplifying the deployment and management of Kubernetes applications. Similar to tools like `yum`, `apt`, or `Homebrew`, Helm enables you to install, update, and roll back applications in Kubernetes with minimal effort.
+![d2](https://github.com/user-attachments/assets/6bb09635-4268-4d02-ae88-c55f9e1031e5)
 
 ### Key Benefits:
 1. **Simplifies Deployment**: Applications with multiple components (e.g., Prometheus) can be deployed with a single command.
@@ -38,6 +39,8 @@ Helm is a **package manager for Kubernetes**, simplifying the deployment and man
 
 ## **Key Helm Features**
 ### 1. **Helm Templating Engine** 
+![d1](https://github.com/user-attachments/assets/7a17a5d9-1d66-4d2b-8de3-ce3a82d25dbd)
+
    - It allosws you to customize your Helm Releases
    - Makes YAML files dynamic using placeholders.
    - Supports **environment-specific values** (e.g., different namespaces or replica counts for Dev/Prod).
