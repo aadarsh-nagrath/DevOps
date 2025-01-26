@@ -113,6 +113,7 @@ a1afdab7fe68   none                   null      local
 ```
 
 ### 1. **Bridge Network (Default)**
+![d6](https://github.com/user-attachments/assets/81541104-6bfa-4605-afc6-002cd2141dc7)
 
 The **Bridge Network** is the default network mode for containers. When Docker containers are created without specifying a network, they are automatically connected to the default bridge network (`docker0`).
 
@@ -145,6 +146,7 @@ docker exec -it nginx ping nginx
 ```
 
 ---
+![d3](https://github.com/user-attachments/assets/a4070d0c-a2de-4172-9727-384072d9b1d3)
 
 ### 2. **Host Network**
 
@@ -161,6 +163,8 @@ docker run -itd --network host --name nginx nginx
 ```
 
 - In this case, the container's service (like NGINX) is available directly on the host’s IP address, and no port mapping is needed.
+![d4](https://github.com/user-attachments/assets/cdcb19b4-7adc-43f4-9fa1-945f979d934e)
+![d5](https://github.com/user-attachments/assets/945c0515-8867-4b8e-8103-c55ad693fda1)
 
 ---
 
